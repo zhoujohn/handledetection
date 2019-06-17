@@ -140,11 +140,10 @@ def check_Hsv_LED(inImg,circles):
     #print("light_colors: ",light_colors)
     return light_colors
 
-#检测闸门手柄朝向
-#输入值：inImg：标注的检测区域内图像， draw=True 显示检测结果图片，draw=False 不显示图片
-#返回值：[1,'W']闸门手柄是横向的， [1,'H']闸门手柄是纵向的，[0,'N']没有检测到闸门手柄
-#注意，把手所占的像素值与标注的检测区域的比例为0.1~0.8之间
-def detect_Lockgate_Status(inImg, draw=True):
+### input value: draw=True,show, draw=False, not show
+### return value:[1,'W']horizontal, [1,'H']vertical,[0,'N']no result
+### detection region is inside 0.1~0.8
+def detect_Lockgate_Status(inImg, draw=False):
 
     w = inImg.shape[1]
     h = inImg.shape[0]
