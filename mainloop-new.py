@@ -84,81 +84,81 @@ def start_detect(i,j,frame,target_matrix):
 	# check handle status
 	hand1 = m0.find("HANDLE")
 	if hand1 >= 0:
-	m0 = m0[0:pos1-1]
-	x_data = detecthandle(cropped)
-	if x_data[0] == 1:
-		if x_data[1] == 'W':
-			r_data = 0xC0
-		else:
-			r_data = 0x80
-	else:
-		r_data = 0x00
-	else:
-	# check lamp status
-	pos1 = m0.find("GREEN")
-	pos2 = m0.find("RED")
-	pos3 = m0.find("YELLOW")
-	if pos1 >=0:  # GREEN
 		m0 = m0[0:pos1-1]
-		tmp = send_data.get(m0)
-		if tmp == None:
-			tmp = 0
-		r_data = tmp + 8
-		x_data = detectsingle(cropped)
-		if len(x_data) > 0:
-			if x_data[0][1] == 'N' or x_data[0][1] == 'E':
-				r_data = r_data
+		x_data = detecthandle(cropped)
+		if x_data[0] == 1:
+			if x_data[1] == 'W':
+				r_data = 0xC0
 			else:
-				r_data = r_data + 4
-	elif pos2 >= 0: # RED
-		m0 = m0[0:pos2-1]
-		tmp = send_data.get(m0)
-		if tmp == None:
-			tmp = 0
-		r_data = tmp + 2
-		x_data = detectsingle(cropped)
-		if len(x_data) > 0:
-			if x_data[0][1] == 'N' or x_data[0][1] == 'E':
-				r_data = r_data
-			else:
-				r_data = r_data + 1
-	elif pos3 >= 0: # YELLOW
-		m0 = m0[0:pos3-1]
-		tmp = send_data.get(m0)
-		if tmp == None:
-			tmp = 0
-		r_data = tmp + 32
-		x_data = detectsingle(cropped)
-		if len(x_data) > 0:
-			if x_data[0][1] == 'N' or x_data[0][1] == 'E':
-				r_data = r_data
-			else:
-				r_data = r_data + 16
-	else:
-		r_data = 10
-		x_data = detectstatus(cropped)
-		if x_data is None:
-			r_data = 0  # default R:off, G:off
-		elif len(x_data):
-			#parse status of lamp
-			x = len(x_data)
-			y = 0
-			while x:
-				tmp0 = x_data[y]
-				tmp1 = tmp0[1]
-				if tmp1 == 'R':
-					r_data = r_data + 1
-				elif tmp1 == 'G':
-					r_data = r_data + 4
-				elif tmp1 == 'E':
-					r_data = 0
-				else:
-					r_data = r_data
-				x = x - 1
-				y = y + 1
-				#print ("lamp status data is %d", (r_data))
+				r_data = 0x80
 		else:
-			r_data = 0
+			r_data = 0x00
+	else:
+		# check lamp status
+		pos1 = m0.find("GREEN")
+		pos2 = m0.find("RED")
+		pos3 = m0.find("YELLOW")
+		if pos1 >=0:  # GREEN
+			m0 = m0[0:pos1-1]
+			tmp = send_data.get(m0)
+			if tmp == None:
+				tmp = 0
+			r_data = tmp + 8
+			x_data = detectsingle(cropped)
+			if len(x_data) > 0:
+				if x_data[0][1] == 'N' or x_data[0][1] == 'E':
+					r_data = r_data
+				else:
+					r_data = r_data + 4
+		elif pos2 >= 0: # RED
+			m0 = m0[0:pos2-1]
+			tmp = send_data.get(m0)
+			if tmp == None:
+				tmp = 0
+			r_data = tmp + 2
+			x_data = detectsingle(cropped)
+			if len(x_data) > 0:
+				if x_data[0][1] == 'N' or x_data[0][1] == 'E':
+					r_data = r_data
+				else:
+					r_data = r_data + 1
+		elif pos3 >= 0: # YELLOW
+			m0 = m0[0:pos3-1]
+			tmp = send_data.get(m0)
+			if tmp == None:
+				tmp = 0
+			r_data = tmp + 32
+			x_data = detectsingle(cropped)
+			if len(x_data) > 0:
+				if x_data[0][1] == 'N' or x_data[0][1] == 'E':
+					r_data = r_data
+				else:
+					r_data = r_data + 16
+		else:
+			r_data = 10
+			x_data = detectstatus(cropped)
+			if x_data is None:
+				r_data = 0  # default R:off, G:off
+			elif len(x_data):
+				#parse status of lamp
+				x = len(x_data)
+				y = 0
+				while x:
+					tmp0 = x_data[y]
+					tmp1 = tmp0[1]
+					if tmp1 == 'R':
+						r_data = r_data + 1
+					elif tmp1 == 'G':
+						r_data = r_data + 4
+					elif tmp1 == 'E':
+						r_data = 0
+					else:
+						r_data = r_data
+					x = x - 1
+					y = y + 1
+					#print ("lamp status data is %d", (r_data))
+			else:
+				r_data = 0
 	return m0, r_data
 
 
