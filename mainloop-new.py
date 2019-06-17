@@ -208,7 +208,7 @@ while True:
 			j = 0
 			while i:
 				m0,r_data = start_detect(i,j,frame,target_matrix2)
-				send_data.update(m0: r_data)
+				send_data.update({m0: r_data})
 				i = i - 1
 				j = j + 1
 		#send detection result to network
