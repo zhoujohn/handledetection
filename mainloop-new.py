@@ -84,7 +84,7 @@ def start_detect(i,j,frame,target_matrix):
 	# check handle status
 	hand1 = m0.find("HANDLE")
 	if hand1 >= 0:
-		m0 = m0[0:pos1-1]
+		m0 = m0[0:hand1-1]
 		x_data = detecthandle(cropped)
 		if x_data[0] == 1:
 			if x_data[1] == 'W':
