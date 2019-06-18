@@ -144,6 +144,9 @@ def check_Hsv_LED(inImg,circles):
 ### return value:[1,'W']horizontal, [1,'H']vertical,[0,'N']no result
 ### detection region is inside 0.1~0.8
 def detect_Lockgate_Status(inImg, draw=False):
+    if inImg is None:
+        preresult = [0, 'N']
+        return preresult
 
     w = inImg.shape[1]
     h = inImg.shape[0]
@@ -169,7 +172,7 @@ def detect_Lockgate_Status(inImg, draw=False):
 
 
     img = cv2.medianBlur(gray_img, 5)
-    ret,th2 = cv2.threshold(img,120,255,cv2.THRESH_BINARY)
+    ret,th2 = cv2.threshold(img,120,255,cv2.THRESH_BINARY_INV)
     
     
 
